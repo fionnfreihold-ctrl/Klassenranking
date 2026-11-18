@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CLASS AWARDS 7a · 2026</title>
+<style>
+:root{--bg:#0c0d18;--panel:#17192b;--panel2:#20233a;--line:#303451;--text:#f5f5ff;--muted:#a5a8c4;--purple:#8b7cff;--pink:#d17bff;--green:#75d6a4}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 20% 0%,#29234d 0,transparent 40%),var(--bg);color:var(--text);font:16px/1.5 system-ui,Segoe UI,sans-serif}
+.wrap{max-width:1050px;margin:auto;padding:24px 16px 60px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{font-weight:900;letter-spacing:.08em;font-size:1.05rem}.brand span{color:var(--purple)}.pill{border:1px solid #4d477e;background:#292344;color:#d8d2ff;padding:6px 12px;border-radius:999px;font-size:.8rem}
+.hero{text-align:center;padding:54px 12px 34px}.eyebrow{color:#b8adff;text-transform:uppercase;letter-spacing:.18em;font-size:.76rem;font-weight:800}
+h1{font-size:clamp(2.4rem,8vw,5rem);line-height:1.02;margin:12px 0;background:linear-gradient(90deg,#fff,#b8aaff,#e5a7ff);background-clip:text;color:transparent}
+.sub{color:var(--muted);max-width:560px;margin:0 auto}.tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:12px 0 26px}
+button,.btn{border:0;border-radius:12px;padding:11px 16px;background:var(--panel2);color:var(--text);font-weight:700;cursor:pointer}
+button:hover{filter:brightness(1.15)}button.primary{background:linear-gradient(100deg,#7567ee,#a56be9);color:white}button.active{background:#39315f;outline:1px solid var(--purple)}
+main{display:grid;gap:16px}.panel{background:linear-gradient(160deg,#1b1d32,#141625);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 16px 45px #0003}
+.panel h2{margin:0 0 6px;font-size:1.25rem}.muted{color:var(--muted);font-size:.9rem}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:14px}
+label{display:block;font-size:.86rem;color:#c8c9df;margin:12px 0 6px}input,select,textarea{width:100%;background:#0f1120;border:1px solid #3a3d5b;color:var(--text);padding:12px;border-radius:10px;font:inherit}textarea{min-height:90px;resize:vertical}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1}.category{border:1px solid var(--line);border-radius:16px;padding:16px;background:#151729}.category h3{margin:0 0 4px}.category p{margin:0 0 12px;color:var(--muted);font-size:.88rem}
+.choice{display:flex;align-items:center;gap:10px;background:#20233a;padding:10px 12px;border-radius:10px;margin:7px 0;cursor:pointer}.choice input{width:auto;accent-color:var(--purple)}
+.notice{border:1px solid #5d518b;background:#292344;color:#ddd6ff;border-radius:12px;padding:12px;font-size:.9rem;margin:12px 0}
+.stat{font-size:2rem;font-weight:900;color:#c4baff}.bar{height:9px;background:#30334b;border-radius:20px;overflow:hidden;margin:8px 0 14px}.bar i{display:block;height:100%;background:linear-gradient(90deg,#786cf2,#d17bff)}
+.hidden{display:none!important}.footer{text-align:center;color:#777b9b;font-size:.78rem;margin-top:26px}
+.smallbtn{padding:7px 10px;font-size:.82rem}.winner{border-color:#8d7bff;background:#24213e}
+@media(max-width:600px){.wrap{padding:16px 12px 40px}.hero{padding:38px 8px 24px}.panel{padding:16px}}
+</style></head>
+<body><div class="wrap">
+<header class="top"><div class="brand">🏆 <span>CLASS</span> AWARDS</div><div class="pill">KLASSE 7a · 2026</div></header>
+<section class="hero"><div class="eyebrow">Die Awards unserer Klasse</div><h1>CLASS AWARDS</h1><p class="sub">Wer holt sich die Awards der 7a? Stimme in deinen Lieblingskategorien ab und entdecke nach dem Voting die Gewinner.</p></section>
+<nav class="tabs">
+<button class="active" data-tab="vote">🗳️ Abstimmen</button><button data-tab="results">🏆 Ergebnisse</button><button data-tab="admin">⚙️ Verwalten</button>
+</nav>
+<main>
+<section id="vote" class="panel"><h2>Deine Stimme zählt</h2><p class="muted">Wähle deinen Namen und stimme pro Kategorie für eine Person ab.</p>
+<div class="notice" id="voteNotice">Die Abstimmung ist noch nicht gestartet. Bitte richte zuerst die Klasse im Bereich „Verwalten“ ein.</div>
+<div id="votingArea" class="hidden"><label for="voter">Ich stimme ab als …</label><select id="voter"></select><div id="voteCategories" class="grid" style="margin-top:16px"></div><button class="primary" id="submitVote" style="margin-top:16px">Stimmen absenden</button></div></section>
+<section id="results" class="panel hidden"><h2>🏆 Die Gewinner</h2><p class="muted">Die Ergebnisse erscheinen erst, wenn die Abstimmung beendet wurde.</p><div id="resultsArea"></div></section>
+<section id="admin" class="panel hidden"><h2>⚙️ Klassenverwaltung</h2><p class="muted">Trage die Namen ein, lege Kategorien an und steuere den Start und das Ende des Votings.</p>
+<div class="notice">Demo-Hinweis: Diese Version speichert Daten nur in diesem Browser. Sie ist noch keine gemeinsame Online-Abstimmung und bietet keine sichere Identitätsprüfung. Für den echten Einsatz mit der ganzen Klasse braucht es Hosting und eine gemeinsame Datenbank.</div>
+<div class="grid">
+<div><h3>Schülerliste</h3><label for="students">Ein Name pro Zeile</label><textarea id="students" placeholder="Alex&#10;Sam&#10;Jamie"></textarea><button id="saveStudents" class="primary">Schülerliste speichern</button></div>
+<div><h3>Neue Kategorie</h3><label for="catName">Kategoriename</label><input id="catName" placeholder="z. B. Klassenclown"><label for="catDesc">Beschreibung</label><input id="catDesc" placeholder="Bringt die Klasse zum Lachen"><button id="addCat" class="primary">Kategorie hinzufügen</button></div>
+</div>
+<h3 style="margin-top:24px">Vorhandene Kategorien</h3><div id="categoryAdmin" class="grid"></div>
+<div class="row" style="margin-top:22px"><button id="startVote" class="primary">Abstimmung starten</button><button id="endVote">Abstimmung beenden</button><button id="reset" style="border:1px solid #754e63">Demo zurücksetzen</button></div>
+<div class="row" style="margin-top:12px"><button id="exportData">Daten exportieren (JSON)</button><label class="btn" style="text-align:center">Daten importieren<input type="file" id="importData" accept="application/json" style="display:none"></label></div>
+</section></main><div class="footer">CLASS AWARDS 7a · Eine faire Abstimmung bleibt respektvoll. Bitte nur positive Kategorien verwenden.</div>
+</div>
+<script>
+const defaults=[
+["😂 Klassenclown","Bringt die Klasse zum Lachen"],["🧠 Schlaumeier","Hat oft die passende Antwort"],["⚽ Sportskanone","Ist besonders sportlich"],["🤝 Hilfsbereiteste Person","Ist für andere da"],["🎤 Entertainer","Sorgt für gute Stimmung"],["🎨 Kreativkopf","Hat viele kreative Ideen"]
+];
+const KEY="classAwards7aDemo";
+let data=JSON.parse(localStorage.getItem(KEY)||"null")||{students:[],categories:defaults.map((x,i)=>({id:i+1,name:x[0],desc:x[1]})),votes:{},started:false,ended:false};
+const save=()=>localStorage.setItem(KEY,JSON.stringify(data));
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function show(tab){document.querySelectorAll("main>section").forEach(s=>s.classList.toggle("hidden",s.id!==tab));document.querySelectorAll("[data-tab]").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));if(tab==="vote")renderVote();if(tab==="results")renderResults();if(tab==="admin")renderAdmin();}
+document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>show(b.dataset.tab));
+function renderVote(){
+ const notice=document.getElementById("voteNotice"),area=document.getElementById("votingArea");
+ notice.classList.remove("hidden");area.classList.add("hidden");
+ if(!data.started){notice.textContent="Die Abstimmung ist noch nicht gestartet.";return}
+ if(data.ended){notice.textContent="Die Abstimmung ist beendet. Die Ergebnisse sind jetzt sichtbar.";return}
+ if(data.students.length<2){notice.textContent="Bitte trage zuerst mindestens zwei Schüler ein.";return}
+ notice.classList.add("hidden");area.classList.remove("hidden");
+ const sel=document.getElementById("voter");sel.innerHTML='<option value="">Name auswählen …</option>'+data.students.map(s=>`<option>${esc(s)}</option>`).join("");
+ document.getElementById("voteCategories").innerHTML=data.categories.map(c=>`<div class="category"><h3>${esc(c.name)}</h3><p>${esc(c.desc)}</p>${data.students.map(s=>`<label class="choice"><input type="radio" name="cat${c.id}" value="${esc(s)}"> ${esc(s)}</label>`).join("")}</div>`).join("");
+}
+document.getElementById("submitVote").onclick=()=>{
+ const voter=document.getElementById("voter").value;if(!voter)return alert("Bitte wähle zuerst deinen Namen.");
+ if(data.votes[voter])return alert("Für diesen Namen wurde bereits abgestimmt.");
+ const picks={};for(const c of data.categories){const p=document.querySelector(`input[name="cat${c.id}"]:checked`);if(!p)return alert("Bitte wähle für jede Kategorie eine Person.");picks[c.id]=p.value}
+ data.votes[voter]=picks;save();alert("Deine Stimmen wurden in dieser Demo gespeichert.");renderVote();
+};
+function renderAdmin(){
+ document.getElementById("students").value=data.students.join("\n");
+ document.getElementById("categoryAdmin").innerHTML=data.categories.map(c=>`<div class="category"><strong>${esc(c.name)}</strong><p>${esc(c.desc)}</p><button class="smallbtn" onclick="removeCat(${c.id})">Kategorie löschen</button></div>`).join("")||'<p class="muted">Noch keine Kategorien.</p>';
+ document.getElementById("startVote").textContent=data.started&&!data.ended?"Abstimmung läuft":"Abstimmung starten";
+ document.getElementById("startVote").disabled=data.started&&!data.ended;
+}
+window.removeCat=id=>{if(confirm("Kategorie wirklich löschen?")){data.categories=data.categories.filter(c=>c.id!==id);save();renderAdmin()}};
+document.getElementById("saveStudents").onclick=()=>{const names=[...new Set(document.getElementById("students").value.split("\n").map(x=>x.trim()).filter(Boolean))];if(names.length<2)return alert("Bitte mindestens zwei Namen eintragen.");if(Object.keys(data.votes).length)return alert("Die Schülerliste kann nach abgegebenen Stimmen in dieser Demo nicht mehr geändert werden. Setze die Demo zurück, wenn du neu starten möchtest.");data.students=names;save();renderAdmin();alert(names.length+" Namen gespeichert.")};
+document.getElementById("addCat").onclick=()=>{const name=document.getElementById("catName").value.trim(),desc=document.getElementById("catDesc").value.trim();if(!name)return alert("Bitte einen Kategorienamen eingeben.");data.categories.push({id:Date.now(),name,desc});document.getElementById("catName").value="";document.getElementById("catDesc").value="";save();renderAdmin()};
+document.getElementById("startVote").onclick=()=>{if(data.students.length<2)return alert("Bitte zuerst mindestens zwei Schüler eintragen.");if(!data.categories.length)return alert("Bitte zuerst Kategorien anlegen.");if(confirm("Abstimmung jetzt starten?")){data.started=true;data.ended=false;save();renderAdmin();alert("Die Abstimmung wurde gestartet.")}};
+document.getElementById("endVote").onclick=()=>{if(!data.started)return alert("Die Abstimmung wurde noch nicht gestartet.");if(confirm("Abstimmung beenden und Ergebnisse freigeben?")){data.ended=true;save();renderAdmin();alert("Die Ergebnisse sind jetzt freigegeben.")}};
+document.getElementById("reset").onclick=()=>{if(confirm("Alle Demo-Schüler, Stimmen und Einstellungen löschen?")){localStorage.removeItem(KEY);location.reload()}};
+function renderResults(){
+ const el=document.getElementById("resultsArea");if(!data.ended){el.innerHTML='<div class="notice">🔒 Noch geheim – die Ergebnisse werden nach dem Ende der Abstimmung veröffentlicht.</div>';return}
+ const total=Object.keys(data.votes).length;if(!total){el.innerHTML='<p class="muted">Es wurden noch keine Stimmen abgegeben.</p>';return}
+ el.innerHTML=`<p class="muted">${total} von ${data.students.length} Namen haben abgestimmt.</p><div class="grid">${data.categories.map(c=>{let counts={};Object.values(data.votes).forEach(v=>{const n=v[c.id];if(n)counts[n]=(counts[n]||0)+1});const sorted=Object.entries(counts).sort((a,b)=>b[1]-a[1]);const max=sorted[0]?.[1]||0;return `<div class="category ${max?'winner':''}"><h3>${esc(c.name)}</h3>${sorted.map(([n,v],i)=>`<div style="display:flex;justify-content:space-between;gap:8px"><span>${i===0&&v===max?"🏆 ":""}${esc(n)}</span><strong>${v}</strong></div><div class="bar"><i style="width:${v/total*100}%"></i></div>`).join("")||'<p class="muted">Keine Stimmen</p>'}</div>`}).join("")}</div>`;
+}
+document.getElementById("exportData").onclick=()=>{const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="class-awards-7a-demo.json";a.click();URL.revokeObjectURL(a.href)};
+document.getElementById("importData").onchange=async e=>{try{const obj=JSON.parse(await e.target.files[0].text());if(!Array.isArray(obj.students)||!Array.isArray(obj.categories)||!obj.votes)throw Error();data=obj;save();renderAdmin();alert("Daten importiert.")}catch{alert("Datei konnte nicht gelesen werden.")}};
+renderVote();
+</script></body></html>
